@@ -11,3 +11,9 @@ frontend/.env
 *.log
 
 mongo-data/
+
+.stfolder/
+.stignore
+.sync-conflict-20260526-234007-3ERY7GX.env
+preview.pid
+vite.pid
