@@ -17,3 +17,8 @@ mongo-data/
 .sync-conflict-20260526-234007-3ERY7GX.env
 preview.pid
 vite.pid
+
+*.pid
+*.jobid
+backend/*.pid
+backend/*.jobid
