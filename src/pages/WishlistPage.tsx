@@ -1,5 +1,6 @@
 import { ChevronLeft } from "lucide-react";
 import { ListingCard } from "../components/ListingCard";
+import { SEO } from "../components/SEO";
 import type { Homestay, Language } from "../types";
 import { text } from "../utils/i18n";
 
@@ -15,6 +16,12 @@ export function WishlistPage({ language, stays, onBack, onSelect }: WishlistPage
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <SEO
+        title="Wishlist"
+        description="Private StayNest wishlist."
+        canonicalPath="/wishlist"
+        robots="noindex,nofollow"
+      />
       <button onClick={onBack} className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold shadow-sm">
         <ChevronLeft size={18} /> {t.backMarketplace}
       </button>

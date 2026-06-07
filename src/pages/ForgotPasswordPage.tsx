@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronLeft, Home } from "lucide-react";
+import { SEO } from "../components/SEO";
 import type { Language } from "../types";
 import { forgotPassword } from "../utils/api";
 import { text } from "../utils/i18n";
@@ -38,6 +39,12 @@ export function ForgotPasswordPage({ language, onBack, onReset }: ForgotPassword
 
   return (
     <main className="mx-auto grid max-w-7xl gap-8 px-4 py-6 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+      <SEO
+        title="Forgot password"
+        description="Request a private StayNest password reset code."
+        canonicalPath="/forgot-password"
+        robots="noindex,nofollow"
+      />
       <section className="rounded-lg bg-ink p-7 text-white">
         <button onClick={onBack} className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-bold">
           <ChevronLeft size={18} /> {t.backMarketplace}

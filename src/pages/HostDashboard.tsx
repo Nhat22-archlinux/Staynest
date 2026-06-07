@@ -3,6 +3,7 @@ import { ChevronLeft, Edit3, Home, ImagePlus, MapPin, Plus, Save, Trash2, Upload
 import { ControlledField } from "../components/ControlledField";
 import { DashboardStat } from "../components/DashboardStat";
 import { MiniMetric } from "../components/MiniMetric";
+import { SEO } from "../components/SEO";
 import { amenities } from "../data/amenities";
 import type { Amenity, AuthUser, Booking, DiscountRange, DiscountType, Homestay, Language, Review } from "../types";
 import { deleteHomestayImages, fetchBookings, fetchHostReviews, uploadHomestayImages } from "../utils/api";
@@ -311,6 +312,12 @@ export function HostDashboard({ language, stays, user, token, onBack, onCreateNe
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <SEO
+        title="Host dashboard"
+        description="Private StayNest host listing and booking management dashboard."
+        canonicalPath="/host/dashboard"
+        robots="noindex,nofollow"
+      />
       <button onClick={onBack} className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold shadow-sm">
         <ChevronLeft size={18} /> {t.backMarketplace}
       </button>
@@ -319,6 +326,7 @@ export function HostDashboard({ language, stays, user, token, onBack, onCreateNe
         <img
           src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1600&q=85"
           alt="Well designed host property"
+          loading="lazy"
           className="absolute inset-0 h-full w-full object-cover opacity-35"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/20" />
@@ -563,7 +571,7 @@ export function HostDashboard({ language, stays, user, token, onBack, onCreateNe
               return (
               <article key={stay.id} className="grid overflow-hidden rounded-lg border border-black/10 bg-white shadow-sm md:grid-cols-[220px_1fr]">
                 <button type="button" onClick={() => onManage(stay.id)} className="relative aspect-[4/3] text-left md:aspect-auto">
-                  <img src={stay.image} alt={stay.title} className="h-full w-full object-cover" />
+                  <img src={stay.image} alt={`${stay.title} host listing in ${stay.area}, ${stay.location}`} loading="lazy" className="h-full w-full object-cover" />
                   <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-black text-ink shadow-sm">
                     {formatListingType(stay.type, language)}
                   </span>

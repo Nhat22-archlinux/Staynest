@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /admin/
+Disallow: /host$
+Disallow: /host/
+Disallow: /account
+Disallow: /wishlist
+Disallow: /booking-history
+Disallow: /notifications
+Disallow: /payment
+Disallow: /payment/
+Disallow: /auth
+Disallow: /auth/
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+
+Sitemap: https://staynest.nniisworking1606.id.vn/sitemap.xml

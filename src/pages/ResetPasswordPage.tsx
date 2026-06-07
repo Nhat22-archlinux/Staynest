@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, Home } from "lucide-react";
+import { SEO } from "../components/SEO";
 import type { Language } from "../types";
 import { ApiError, resetPassword } from "../utils/api";
 import { text } from "../utils/i18n";
@@ -65,6 +66,12 @@ export function ResetPasswordPage({ language, initialEmail, onBack, onLogin }: R
 
   return (
     <main className="mx-auto grid max-w-7xl gap-8 px-4 py-6 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+      <SEO
+        title="Reset password"
+        description="Private StayNest password reset page."
+        canonicalPath="/reset-password"
+        robots="noindex,nofollow"
+      />
       <section className="rounded-lg bg-ink p-7 text-white">
         <button onClick={onBack} className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-bold">
           <ChevronLeft size={18} /> {t.backMarketplace}

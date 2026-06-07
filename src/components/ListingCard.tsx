@@ -6,6 +6,7 @@ import { formatPrice } from "../utils/currency";
 import { getDateRangeStatus } from "../utils/date";
 import { getPriceBreakdown } from "../utils/discount";
 import { formatListingType, text } from "../utils/i18n";
+import { homestayImageAlt, optimizeCloudinaryImage } from "../utils/seo";
 
 type ListingCardProps = {
   language: Language;
@@ -60,7 +61,12 @@ export function ListingCard({ language, stay, bookingSearch, onSelect }: Listing
     <article className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
       <button onClick={onSelect} className="block w-full text-left">
         <div className="relative aspect-[4/3] overflow-hidden">
-          <img src={stay.image} alt={stay.title} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
+          <img
+            src={optimizeCloudinaryImage(stay.image, 900)}
+            alt={homestayImageAlt(stay, "listing photo")}
+            loading="lazy"
+            className="h-full w-full object-cover transition duration-500 hover:scale-105"
+          />
           <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-black text-ink shadow-sm">
             {formatListingType(stay.type, language)}
           </span>

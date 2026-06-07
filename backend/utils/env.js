@@ -1,4 +1,4 @@
-export const DEFAULT_FRONTEND_URL = "http://localhost:4173";
+export const DEFAULT_FRONTEND_URL = "https://staynest.nniisworking1606.id.vn";
 
 function validOrigin(origin) {
   if (!origin) {

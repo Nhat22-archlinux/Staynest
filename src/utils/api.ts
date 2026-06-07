@@ -3,7 +3,7 @@ import type { AdminStats, AdminUser, AuthUser, Booking, BookingStatus, Homestay,
 const configuredApiUrl = import.meta.env.VITE_API_URL;
 
 if (!configuredApiUrl) {
-  throw new Error("Missing VITE_API_URL. Add it to your frontend .env file, for example VITE_API_URL=http://your-backend-host:5000/api");
+  throw new Error("Missing VITE_API_URL. Add it to your frontend .env file, for example VITE_API_URL=/api for the Docker/Nginx deployment.");
 }
 
 const API_BASE_URL = configuredApiUrl.replace(/\/+$/, "");

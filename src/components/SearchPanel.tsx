@@ -32,6 +32,7 @@ export function SearchPanel({ language, bookingSearch, setBookingSearch }: Searc
             value={bookingSearch.location}
             onChange={(event) => updateSearch("location", event.target.value)}
             placeholder={t.locationPlaceholder}
+            aria-label={t.location}
             className="w-full bg-transparent text-sm font-bold outline-none placeholder:text-slate-400"
           />
         </SearchField>
@@ -41,6 +42,7 @@ export function SearchPanel({ language, bookingSearch, setBookingSearch }: Searc
             min={today}
             value={bookingSearch.checkIn}
             onChange={(event) => updateSearch("checkIn", event.target.value)}
+            aria-label={t.checkIn}
             className="w-full bg-transparent text-sm font-bold outline-none"
           />
         </SearchField>
@@ -50,6 +52,7 @@ export function SearchPanel({ language, bookingSearch, setBookingSearch }: Searc
             min={checkOutMin}
             value={bookingSearch.checkOut}
             onChange={(event) => updateSearch("checkOut", event.target.value)}
+            aria-label={t.checkOut}
             className="w-full bg-transparent text-sm font-bold outline-none"
           />
         </SearchField>
@@ -57,6 +60,7 @@ export function SearchPanel({ language, bookingSearch, setBookingSearch }: Searc
           <select
             value={bookingSearch.guests}
             onChange={(event) => updateSearch("guests", Number(event.target.value))}
+            aria-label={t.guests}
             className="w-full bg-transparent text-sm font-bold outline-none"
           >
             {[2, 4, 6, 8].map((count) => (
@@ -66,7 +70,7 @@ export function SearchPanel({ language, bookingSearch, setBookingSearch }: Searc
             ))}
           </select>
         </SearchField>
-        <button className="flex min-h-14 items-center justify-center gap-2 rounded-md bg-coral px-6 text-sm font-black text-white transition hover:bg-[#d85f42] md:col-span-2 lg:col-span-1">
+        <button type="button" className="flex min-h-14 items-center justify-center gap-2 rounded-md bg-coral px-6 text-sm font-black text-white transition hover:bg-[#d85f42] md:col-span-2 lg:col-span-1">
           <Search size={18} /> {t.search}
         </button>
       </div>

@@ -8,7 +8,8 @@ export function createSlug(title: string) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/đ/g, "d")
+    .replace(/\u0111/g, "d")
+    .replace(/\u0110/g, "d")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
@@ -16,8 +17,8 @@ export function createSlug(title: string) {
 }
 
 export function getHomestayRoute(stay: Homestay) {
-  const hostId = stay.owner || `host-${encodeURIComponent(stay.host.toLowerCase().replace(/\s+/g, "-"))}`;
-  return `/hosts/${hostId}/homestays/${stay.id}/${createSlug(stay.title)}`;
+  const hostId = stay.owner || `host-${createSlug(stay.host)}`;
+  return `/hosts/${encodeURIComponent(String(hostId))}/homestays/${encodeURIComponent(String(stay.id))}/${createSlug(stay.title)}`;
 }
 
 export function parseHomestayRoute(pathname: string) {

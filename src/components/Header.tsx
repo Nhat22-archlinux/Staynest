@@ -26,8 +26,8 @@ export function Header({ language, setLanguage, onHome, onHost, onAdmin, onLogin
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f7f4ef]/90 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <button onClick={onHome} className="flex items-center gap-2 text-left">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Primary navigation">
+        <button onClick={onHome} className="flex items-center gap-2 text-left" aria-label="StayNest home">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ocean text-white">
             <Home size={21} />
           </span>
@@ -96,7 +96,12 @@ export function Header({ language, setLanguage, onHome, onHost, onAdmin, onLogin
             </>
           )}
           <div className="relative">
-            <button onClick={() => setMenuOpen((open) => !open)} className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-ink shadow-sm">
+            <button
+              onClick={() => setMenuOpen((open) => !open)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-ink shadow-sm"
+              aria-label={menuOpen ? t.close : "Open menu"}
+              aria-expanded={menuOpen}
+            >
               <Menu size={20} />
             </button>
             {menuOpen && (

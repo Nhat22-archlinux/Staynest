@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Bath, BedDouble, ChevronLeft, MapPin, Star, Users, Wifi, X } from "lucide-react";
 import { Fact } from "../components/Fact";
+import { SEO } from "../components/SEO";
 import type { AuthUser, Booking, BookingSearch, Homestay, HomestayAvailability, Language, PaymentMethod, Review, Voucher } from "../types";
 import { addDaysToDateString, getDateRangeStatus, getTodayDateString } from "../utils/date";
 import { formatPrice } from "../utils/currency";
 import { getPriceBreakdown } from "../utils/discount";
 import { amenityLabels, formatListingType, text } from "../utils/i18n";
 import { createBooking, createReview, createStripeCheckoutSession, fetchBookings, fetchHomestayAvailability, fetchHomestayReviews } from "../utils/api";
+import { getHomestayRoute } from "../utils/routes";
+import { buildHomestayBreadcrumbJsonLd, buildHomestayDescription, buildHomestayJsonLd, homestayImageAlt, optimizeCloudinaryImage } from "../utils/seo";
 
 type DetailPageProps = {
   language: Language;
@@ -85,6 +88,10 @@ export function DetailPage({
     reviews.length > 0
       ? Number((reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(2))
       : stay.rating;
+  const canonicalPath = getHomestayRoute(stay);
+  const seoImage = optimizeCloudinaryImage(stay.image || stay.gallery[0], 1200);
+  const seoTitle = `${stay.title} in ${stay.area}, ${stay.location}`;
+  const seoDescription = buildHomestayDescription(stay);
   const isOwnListing = Boolean(user?.role === "host" && (String(stay.owner) === String(user.id) || stay.host === user.name));
   const canBook = !user || user.role === "guest";
   const noRoomsForDates = Boolean(dateRange.isValid && availability && availability.availableForDateRange <= 0);
@@ -272,15 +279,36 @@ export function DetailPage({
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <SEO
+        title={seoTitle}
+        description={seoDescription}
+        canonicalPath={canonicalPath}
+        image={seoImage}
+        jsonLd={[
+          buildHomestayBreadcrumbJsonLd(stay),
+          buildHomestayJsonLd(stay, reviews),
+        ]}
+      />
       <button onClick={onBack} className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold shadow-sm">
         <ChevronLeft size={18} /> {t.backToStays}
       </button>
       <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="grid gap-3">
-          <img src={stay.image} alt={stay.title} className="aspect-[16/10] w-full rounded-lg object-cover" />
+          <img
+            src={optimizeCloudinaryImage(stay.image, 1400)}
+            alt={homestayImageAlt(stay, "main photo")}
+            fetchPriority="high"
+            className="aspect-[16/10] w-full rounded-lg object-cover"
+          />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {stay.gallery.map((image) => (
-              <img key={image} src={image} alt={`${stay.title} interior`} className="aspect-[4/3] rounded-lg object-cover" />
+            {stay.gallery.map((image, index) => (
+              <img
+                key={image}
+                src={optimizeCloudinaryImage(image, 900)}
+                alt={homestayImageAlt(stay, `gallery photo ${index + 1}`)}
+                loading="lazy"
+                className="aspect-[4/3] rounded-lg object-cover"
+              />
             ))}
           </div>
         </div>

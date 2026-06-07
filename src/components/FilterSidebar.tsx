@@ -35,6 +35,7 @@ export function FilterSidebar(props: FilterSidebarProps) {
             max="200"
             value={props.maxPrice}
             onChange={(event) => props.setMaxPrice(Number(event.target.value))}
+            aria-label={t.maxPrice}
             className="w-full accent-ocean"
           />
         </div>
@@ -50,6 +51,7 @@ export function FilterSidebar(props: FilterSidebarProps) {
             step="0.1"
             value={props.minRating}
             onChange={(event) => props.setMinRating(Number(event.target.value))}
+            aria-label={t.minRating}
             className="w-full accent-ocean"
           />
         </div>

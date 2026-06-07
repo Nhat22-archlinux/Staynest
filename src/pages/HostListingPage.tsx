@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Bath, BedDouble, ChevronLeft, Edit3, MapPin, Star, Users } from "lucide-react";
 import { Fact } from "../components/Fact";
+import { SEO } from "../components/SEO";
 import type { AuthUser, Booking, BookingStatus, Homestay, Language, Review } from "../types";
 import { fetchBookings, fetchHomestayReviews, replyToReview, updateBookingStatus } from "../utils/api";
 import { formatPrice } from "../utils/currency";
 import { getPriceBreakdown } from "../utils/discount";
 import { amenityLabels, formatListingType, text } from "../utils/i18n";
+import { homestayImageAlt, optimizeCloudinaryImage } from "../utils/seo";
 
 type HostListingPageProps = {
   language: Language;
@@ -118,6 +120,12 @@ export function HostListingPage({ language, stay, user, token, onBack, onEdit, o
   if (!ownListing) {
     return (
       <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 lg:px-8">
+        <SEO
+          title="Host listing access"
+          description="Private StayNest host listing management access page."
+          canonicalPath={`/host/homestays/${stay.id}`}
+          robots="noindex,nofollow"
+        />
         <button onClick={onBack} className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold shadow-sm">
           <ChevronLeft size={18} /> {t.hostDashboard}
         </button>
@@ -130,16 +138,28 @@ export function HostListingPage({ language, stay, user, token, onBack, onEdit, o
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <SEO
+        title={`Manage ${stay.title}`}
+        description="Private StayNest host listing management page."
+        canonicalPath={`/host/homestays/${stay.id}`}
+        robots="noindex,nofollow"
+      />
       <button onClick={onBack} className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold shadow-sm">
         <ChevronLeft size={18} /> {t.hostDashboard}
       </button>
 
       <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="grid gap-3">
-          <img src={stay.image} alt={stay.title} className="aspect-[16/10] w-full rounded-lg object-cover" />
+          <img src={optimizeCloudinaryImage(stay.image, 1400)} alt={homestayImageAlt(stay, "host management main photo")} className="aspect-[16/10] w-full rounded-lg object-cover" />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {stay.gallery.map((image) => (
-              <img key={image} src={image} alt={`${stay.title} gallery`} className="aspect-[4/3] rounded-lg object-cover" />
+            {stay.gallery.map((image, index) => (
+              <img
+                key={image}
+                src={optimizeCloudinaryImage(image, 900)}
+                alt={homestayImageAlt(stay, `host gallery photo ${index + 1}`)}
+                loading="lazy"
+                className="aspect-[4/3] rounded-lg object-cover"
+              />
             ))}
           </div>
         </div>

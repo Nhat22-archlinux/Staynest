@@ -12,6 +12,7 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import voucherRoutes from "./routes/voucherRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import publicRoutes from "./routes/publicRoutes.js";
 import { passport } from "./config/passport.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { notFound } from "./middleware/notFound.js";
@@ -20,10 +21,31 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = process.env.CORS_ORIGIN?.split(",").map((origin) => origin.trim()).filter(Boolean);
+app.set("trust proxy", 1);
+
+const defaultAllowedOrigins = [
+  "https://staynest.nniisworking1606.id.vn",
+  "http://192.168.0.110:4173",
+  "http://localhost:4173",
+  "http://localhost:5173",
+];
+
+const configuredOrigins = process.env.CORS_ORIGIN?.split(",").map((origin) => origin.trim()).filter(Boolean) ?? [];
+const allowedOrigins = [...new Set([
+  ...defaultAllowedOrigins,
+  process.env.FRONTEND_URL,
+  ...configuredOrigins,
+].filter(Boolean))];
 
 app.use(cors({
-  origin: allowedOrigins?.length ? allowedOrigins : true,
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`CORS blocked origin: ${origin}`));
+  },
   credentials: true,
 }));
 app.use(express.json({ limit: "2mb" }));
@@ -53,6 +75,7 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/vouchers", voucherRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/public", publicRoutes);
 app.use("/api/admin", adminRoutes);
 
 app.use(notFound);

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { SEO } from "../components/SEO";
 import type { Booking, Language } from "../types";
 import { finalizeStripeCheckoutSession } from "../utils/api";
 import { formatPrice } from "../utils/currency";
@@ -42,6 +43,12 @@ export function PaymentSuccessPage({ language, token, onDone }: PaymentSuccessPa
 
   return (
     <main className="mx-auto grid min-h-[70vh] max-w-3xl place-items-center px-4 py-10 sm:px-6 lg:px-8">
+      <SEO
+        title="Payment success"
+        description="Private StayNest payment confirmation."
+        canonicalPath="/payment/success"
+        robots="noindex,nofollow"
+      />
       {booking && (
         <div className="fixed right-4 top-20 z-50 rounded-lg bg-ink px-5 py-4 text-sm font-black text-white shadow-soft">
           <p>{t.paymentSuccessful}</p>

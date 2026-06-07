@@ -3,8 +3,10 @@ import { useState } from "react";
 import { FilterSidebar } from "../components/FilterSidebar";
 import { ListingCard } from "../components/ListingCard";
 import { SearchPanel } from "../components/SearchPanel";
+import { SEO } from "../components/SEO";
 import type { Amenity, BookingSearch, Homestay, Language } from "../types";
 import { text } from "../utils/i18n";
+import { buildHomeJsonLd } from "../utils/seo";
 
 type HomePageProps = {
   language: Language;
@@ -23,13 +25,23 @@ type HomePageProps = {
 export function HomePage(props: HomePageProps) {
   const t = text[props.language];
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const hasQueryParams = window.location.search.length > 1;
+  const canonicalPath = /^\/homestays\/?$/.test(window.location.pathname) ? "/homestays" : "/";
 
   return (
     <main>
+      <SEO
+        title="StayNest Homestay Booking Marketplace"
+        description="Find and book curated homestays, villas, and local stays in Vietnam with StayNest. Search by location, dates, guests, amenities, rating, and price."
+        canonicalPath={canonicalPath}
+        robots={hasQueryParams ? "noindex,follow" : "index,follow"}
+        jsonLd={buildHomeJsonLd()}
+      />
       <section className="relative overflow-hidden bg-ink">
         <img
           src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85"
           alt="Modern homestay with a pool and mountain view"
+          fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover opacity-65"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent" />

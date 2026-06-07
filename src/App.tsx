@@ -1,24 +1,9 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { homestays } from "./data/homestays";
 import { useHomestayFilters } from "./hooks/useHomestayFilters";
 import { DetailPage } from "./pages/DetailPage";
 import { HomePage } from "./pages/HomePage";
-import { HostDashboard } from "./pages/HostDashboard";
-import { HostEditPage } from "./pages/HostEditPage";
-import { HostListingPage } from "./pages/HostListingPage";
-import { AccountSettingsPage } from "./pages/AccountSettingsPage";
-import { AdminDashboard } from "./pages/AdminDashboard";
-import { AuthPage } from "./pages/AuthPage";
-import { BookingsPage } from "./pages/BookingsPage";
-import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
-import { GoogleOAuthSuccessPage } from "./pages/GoogleOAuthSuccessPage";
-import { NotificationsPage } from "./pages/NotificationsPage";
-import { PaymentCancelPage } from "./pages/PaymentCancelPage";
-import { PaymentSuccessPage } from "./pages/PaymentSuccessPage";
-import { ProtectedMessage } from "./pages/ProtectedMessage";
-import { ResetPasswordPage } from "./pages/ResetPasswordPage";
-import { WishlistPage } from "./pages/WishlistPage";
 import type { Amenity, AuthUser, BookingSearch, Homestay, Language, Notification, View, Voucher } from "./types";
 import {
   createHomestay,
@@ -40,6 +25,22 @@ import { text } from "./utils/i18n";
 import { getHomestayRoute, parseHomestayRoute } from "./utils/routes";
 
 initializeAppVersion();
+
+const HostDashboard = lazy(() => import("./pages/HostDashboard").then((module) => ({ default: module.HostDashboard })));
+const HostEditPage = lazy(() => import("./pages/HostEditPage").then((module) => ({ default: module.HostEditPage })));
+const HostListingPage = lazy(() => import("./pages/HostListingPage").then((module) => ({ default: module.HostListingPage })));
+const AccountSettingsPage = lazy(() => import("./pages/AccountSettingsPage").then((module) => ({ default: module.AccountSettingsPage })));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard").then((module) => ({ default: module.AdminDashboard })));
+const AuthPage = lazy(() => import("./pages/AuthPage").then((module) => ({ default: module.AuthPage })));
+const BookingsPage = lazy(() => import("./pages/BookingsPage").then((module) => ({ default: module.BookingsPage })));
+const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage").then((module) => ({ default: module.ForgotPasswordPage })));
+const GoogleOAuthSuccessPage = lazy(() => import("./pages/GoogleOAuthSuccessPage").then((module) => ({ default: module.GoogleOAuthSuccessPage })));
+const NotificationsPage = lazy(() => import("./pages/NotificationsPage").then((module) => ({ default: module.NotificationsPage })));
+const PaymentCancelPage = lazy(() => import("./pages/PaymentCancelPage").then((module) => ({ default: module.PaymentCancelPage })));
+const PaymentSuccessPage = lazy(() => import("./pages/PaymentSuccessPage").then((module) => ({ default: module.PaymentSuccessPage })));
+const ProtectedMessage = lazy(() => import("./pages/ProtectedMessage").then((module) => ({ default: module.ProtectedMessage })));
+const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage").then((module) => ({ default: module.ResetPasswordPage })));
+const WishlistPage = lazy(() => import("./pages/WishlistPage").then((module) => ({ default: module.WishlistPage })));
 
 function getRouteHomestayId() {
   return parseHomestayRoute(window.location.pathname)?.homestayId ?? null;
@@ -644,6 +645,7 @@ function App() {
         unreadCount={unreadCount}
       />
 
+      <Suspense fallback={<main className="mx-auto max-w-7xl px-4 py-8 text-sm font-bold text-slate-600 sm:px-6 lg:px-8">Loading...</main>}>
       {view === "home" && (
         <HomePage
           language={language}
@@ -857,6 +859,7 @@ function App() {
           onLogin={() => openAuth("login")}
         />
       )}
+      </Suspense>
     </div>
   );
 }

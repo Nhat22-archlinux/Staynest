@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, Save, Upload, X } from "lucide-react";
 import { ControlledField } from "../components/ControlledField";
+import { SEO } from "../components/SEO";
 import { amenities } from "../data/amenities";
 import type { Amenity, AuthUser, DiscountRange, DiscountType, Homestay, Language } from "../types";
 import { deleteHomestayImages, uploadHomestayImages } from "../utils/api";
@@ -274,6 +275,12 @@ export function HostEditPage({ language, stay, user, token, mode = "edit", onBac
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
+      <SEO
+        title={mode === "create" ? "Create host listing" : "Edit host listing"}
+        description="Private StayNest host listing editor."
+        canonicalPath={mode === "create" ? "/host/homestays/new" : `/host/homestays/${stay?.id}/edit`}
+        robots="noindex,nofollow"
+      />
       <button onClick={onBack} className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold shadow-sm">
         <ChevronLeft size={18} /> {t.hostDashboard}
       </button>
@@ -397,7 +404,7 @@ export function HostEditPage({ language, stay, user, token, mode = "edit", onBac
           <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
             {existingImageUrls.map((image) => (
               <div key={image} className="relative">
-                <img src={image} alt="Listing upload preview" className="aspect-square rounded-md object-cover" />
+                <img src={image} alt="Listing upload preview" loading="lazy" className="aspect-square rounded-md object-cover" />
                 <button type="button" onClick={() => removeExistingImage(image)} aria-label={t.removeImage} title={t.removeImage} className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-ink shadow-sm hover:bg-coral hover:text-white">
                   <X size={15} />
                 </button>
@@ -405,7 +412,7 @@ export function HostEditPage({ language, stay, user, token, mode = "edit", onBac
             ))}
             {previewUrls.map((image, index) => (
               <div key={`${image}-${index}`} className="relative">
-                <img src={image} alt="Listing upload preview" className="aspect-square rounded-md object-cover" />
+                <img src={image} alt="Listing upload preview" loading="lazy" className="aspect-square rounded-md object-cover" />
                 <button type="button" onClick={() => removeSelectedImage(index)} aria-label={t.removeImage} title={t.removeImage} className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-ink shadow-sm hover:bg-coral hover:text-white">
                   <X size={15} />
                 </button>

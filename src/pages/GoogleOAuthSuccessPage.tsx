@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SEO } from "../components/SEO";
 import type { AuthUser, Language } from "../types";
 import { fetchMe } from "../utils/api";
 import { text } from "../utils/i18n";
@@ -38,6 +39,12 @@ export function GoogleOAuthSuccessPage({ language, onAuthed, onFailure }: Google
 
   return (
     <main className="mx-auto grid min-h-[70vh] max-w-3xl place-items-center px-4 py-10 sm:px-6 lg:px-8">
+      <SEO
+        title="Google sign in"
+        description="Private StayNest Google sign-in callback."
+        canonicalPath="/auth/google/success"
+        robots="noindex,nofollow"
+      />
       <section className="w-full rounded-lg border border-black/10 bg-white p-8 text-center shadow-sm">
         <p className="text-sm font-black uppercase tracking-[0.14em] text-ocean">Google</p>
         <h1 className="mt-3 text-3xl font-black tracking-tight">{message}</h1>

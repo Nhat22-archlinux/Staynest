@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft } from "lucide-react";
+import { SEO } from "../components/SEO";
 import type { AuthUser, Booking, BookingStatus, Language } from "../types";
 import { fetchBookings, updateBookingStatus } from "../utils/api";
 import { formatPrice } from "../utils/currency";
@@ -41,6 +42,12 @@ export function BookingsPage({ language, token, user, onBack }: BookingsPageProp
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <SEO
+        title={user?.role === "host" ? "Host booking requests" : "Booking history"}
+        description="Private StayNest booking history and booking management."
+        canonicalPath="/booking-history"
+        robots="noindex,nofollow"
+      />
       <button onClick={onBack} className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold shadow-sm">
         <ChevronLeft size={18} /> {t.backMarketplace}
       </button>
